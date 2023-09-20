@@ -27,4 +27,18 @@ public class Responsavel {
         this.email = dados.email();
         this.telefone = dados.telefone();
     }
+
+    public void atualizaDados(ResponsavelDTO dados) {
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+
+        if(dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+    }
 }

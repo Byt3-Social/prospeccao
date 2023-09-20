@@ -19,4 +19,18 @@ public class ProspeccaoService {
         Organizacao organizacao = new Organizacao(dados);
         organizacaoRepository.save(organizacao);
     }
+
+    @Transactional
+    public void atualizarOrganizacao(OrganizacaoDTO dados) {
+        Organizacao organizacao = organizacaoRepository.findById(dados.id()).get();
+        organizacao.atualizaDados(dados);
+    }
+
+    public List<Organizacao> consultaPotenciaisOrganizacoes() {
+        return organizacaoRepository.findAll();
+    }
+
+    public Organizacao consultaPotencialOrganizacao(Integer id) {
+        return organizacaoRepository.findById(id).get();
+    }
 }

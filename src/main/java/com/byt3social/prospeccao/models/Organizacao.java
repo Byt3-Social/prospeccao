@@ -40,4 +40,26 @@ public class Organizacao {
         this.statusCadastro = Status.CADASTRADO;
         this.dataCadastro = Date.from(Instant.now());
     }
+
+    public void atualizaDados(OrganizacaoDTO dados) {
+        if(dados.cnpj() != null) {
+            this.cnpj = dados.cnpj();
+        }
+
+        if(dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+
+        if(dados.email() != null) {
+            this.email = dados.email();
+        }
+
+        if(dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+
+        if(dados.responsavel() != null) {
+            this.responsavel.atualizaDados(dados.responsavel());
+        }
+    }
 }

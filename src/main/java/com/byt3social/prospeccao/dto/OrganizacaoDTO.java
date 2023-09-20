@@ -8,6 +8,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record OrganizacaoDTO(
+        @Pattern(regexp = "\\d")
+        Integer id,
         @NotBlank
         @Pattern(regexp = "\\d{14}")
         String cnpj,
