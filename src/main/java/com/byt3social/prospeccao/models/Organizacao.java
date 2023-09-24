@@ -2,6 +2,7 @@ package com.byt3social.prospeccao.models;
 
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.enums.Status;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -61,5 +62,10 @@ public class Organizacao {
         if(dados.responsavel() != null) {
             this.responsavel.atualizaDados(dados.responsavel());
         }
+    }
+
+    public void atualizaStatus(OrganizacaoDTO org) {
+        this.cnpj = org.cnpj();
+        this.statusCadastro = org.statusCadastro();
     }
 }

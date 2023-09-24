@@ -19,7 +19,7 @@ public class OrganizacaoController {
     @Autowired
     private ProspeccaoService prospeccaoService;
 
-    @PostMapping("/organizacao/cadastrar")
+    @PostMapping("/organizacoes")
     public ResponseEntity cadastrarPotencialOrganizacao(@RequestBody @Valid OrganizacaoDTO dados) {
         prospeccaoService.cadastraOrganizacao(dados);
 
@@ -33,7 +33,7 @@ public class OrganizacaoController {
         return new ResponseEntity(organizacaos, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/organizacao/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/organizacoes/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity consultaOrganizacao(@PathVariable Integer id) {
         Organizacao organizacao = prospeccaoService.consultaPotencialOrganizacao(id);
 
