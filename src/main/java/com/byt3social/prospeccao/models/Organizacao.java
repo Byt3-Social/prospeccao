@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.Instant;
 import java.util.Date;
@@ -20,6 +22,7 @@ public class Organizacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(updatable = false)
     private String cnpj;
     private String nome;
     private String email;
@@ -27,10 +30,17 @@ public class Organizacao {
     @Embedded
     private Responsavel responsavel;
     @Column(name = "status_cadastro")
+    @JsonProperty("status_cadastro")
     @Enumerated(EnumType.STRING)
     private Status statusCadastro;
-    @Column(name = "data_cadastro")
-    private Date dataCadastro;
+    @CreationTimestamp
+    @Column(name = "created_at")
+    @JsonProperty("created_at")
+    private Date createdAt;
+    @UpdateTimestamp
+    @Column(name = "updated_at")
+    @JsonProperty("update_at")
+    private Date updatedAt;
 
     public Organizacao(OrganizacaoDTO dados) {
         this.cnpj = dados.cnpj();
@@ -39,33 +49,32 @@ public class Organizacao {
         this.telefone = dados.telefone();
         this.responsavel = new Responsavel(dados.responsavel());
         this.statusCadastro = Status.CADASTRADO;
-        this.dataCadastro = Date.from(Instant.now());
+        this.createdAt = Date.from(Instant.now());
     }
 
-    public void atualizaDados(OrganizacaoDTO dados) {
-        if(dados.cnpj() != null) {
-            this.cnpj = dados.cnpj();
+    public void atualizar(OrganizacaoDTO dadosOrganizacao) {
+        if(dadosOrganizacao.cnpj() != null) {
+            this.cnpj = dadosOrganizacao.cnpj();
         }
 
-        if(dados.nome() != null) {
-            this.nome = dados.nome();
+        if(dadosOrganizacao.nome() != null) {
+            this.nome = dadosOrganizacao.nome();
         }
 
-        if(dados.email() != null) {
-            this.email = dados.email();
+        if(dadosOrganizacao.email() != null) {
+            this.email = dadosOrganizacao.email();
         }
 
-        if(dados.telefone() != null) {
-            this.telefone = dados.telefone();
+        if(dadosOrganizacao.telefone() != null) {
+            this.telefone = dadosOrganizacao.telefone();
         }
 
-        if(dados.responsavel() != null) {
-            this.responsavel.atualizaDados(dados.responsavel());
+        if(dadosOrganizacao.responsavel() != null) {
+            this.responsavel.atualizar(dadosOrganizacao.responsavel());
         }
     }
 
-    public void atualizaStatus(OrganizacaoDTO org) {
-        this.cnpj = org.cnpj();
-        this.statusCadastro = org.statusCadastro();
+    public void atualizarStatus(OrganizacaoDTO organizacaoDTO) {
+        this.statusCadastro = organizacaoDTO.statusCadastro();
     }
 }

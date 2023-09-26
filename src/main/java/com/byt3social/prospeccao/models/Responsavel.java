@@ -1,9 +1,6 @@
 package com.byt3social.prospeccao.models;
 
 import com.byt3social.prospeccao.dto.ResponsavelDTO;
-import com.fasterxml.jackson.annotation.JsonAlias;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -28,7 +25,7 @@ public class Responsavel {
         this.telefone = dados.telefone();
     }
 
-    public void atualizaDados(ResponsavelDTO dados) {
+    public void atualizar(ResponsavelDTO dados) {
         if(dados.nome() != null) {
             this.nome = dados.nome();
         }

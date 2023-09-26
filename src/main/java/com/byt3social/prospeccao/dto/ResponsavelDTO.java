@@ -5,12 +5,12 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
 public record ResponsavelDTO(
-        @NotBlank
+        @NotBlank(message = "nome do responsável não pode ser vazio")
         String nome,
-        @NotBlank
-        @Email
+        @NotBlank(message = "email do responsável não pode ser vazio")
+        @Email(message = "email inválido")
         String email,
-        @NotBlank
-        @Pattern(regexp = "\\d{10,11}")
+        @NotBlank(message = "telefone do responsável não pode ser vazio")
+        @Pattern(regexp = "\\d{10,11}", message = "telefone inválido")
         String telefone
 ) {}
