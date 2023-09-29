@@ -22,7 +22,7 @@ public class OrganizacaoService {
         Organizacao organizacao = new Organizacao(dadosOrganizacao);
         organizacao = organizacaoRepository.save(organizacao);
 
-        rabbitTemplate.convertAndSend("prospeccao.ex","organizacao.cadastrada", organizacao);
+        rabbitTemplate.convertAndSend("prospeccao.ex","", organizacao);
     }
 
     @Transactional

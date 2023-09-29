@@ -12,7 +12,7 @@ public class ProcessoAtualizadoListener {
     @Autowired
     private OrganizacaoService organizacaoService;
 
-    @RabbitListener(queues = "processo.atualizado")
+    @RabbitListener(queues = "processo.atualizado.prospeccao")
     public void processoAtualizado(@Payload OrganizacaoDTO organizacaoDTO) {
         organizacaoService.atualizarStatusOrganizacao(organizacaoDTO);
     }

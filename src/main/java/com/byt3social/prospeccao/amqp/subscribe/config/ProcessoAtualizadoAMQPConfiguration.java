@@ -8,16 +8,16 @@ import org.springframework.context.annotation.Configuration;
 public class ProcessoAtualizadoAMQPConfiguration {
     @Bean
     public Queue processoAtualizadoQueue() {
-        return QueueBuilder.nonDurable("processo.atualizado").build();
+        return QueueBuilder.nonDurable("processo.atualizado.prospeccao").build();
     }
 
     @Bean
-    public DirectExchange processosDirectExchange() {
-        return ExchangeBuilder.directExchange("compliance.ex").build();
+    public FanoutExchange complianceFanoutExchange() {
+        return ExchangeBuilder.fanoutExchange("compliance.ex").build();
     }
 
     @Bean
-    public Binding bindProcessoAtualizadoToProcessos() {
-        return BindingBuilder.bind(processoAtualizadoQueue()).to(processosDirectExchange()).with("processo.atualizado");
+    public Binding bindProcessoAtualizadoToCompliance() {
+        return BindingBuilder.bind(processoAtualizadoQueue()).to(complianceFanoutExchange());
     }
 }
