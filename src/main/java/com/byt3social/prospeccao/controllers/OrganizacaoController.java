@@ -1,5 +1,6 @@
 package com.byt3social.prospeccao.controllers;
 
+import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.services.OrganizacaoService;
@@ -41,8 +42,23 @@ public class OrganizacaoController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
+    @PostMapping("/indicacoes")
+    public ResponseEntity indicarOrganizacao(@RequestBody IndicacaoDTO dadosOrganizacao) {
+        organizacaoService.indicarOrganizacao(dadosOrganizacao);
+
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/indicacoes/{id}")
+    public ResponseEntity converterIndicacao(@PathVariable("id") Integer organizacaoID) {
+        organizacaoService.converterIndicacao(organizacaoID);
+
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
     @PutMapping("/organizacoes/{id}")
     public ResponseEntity atualizarOrganizacaoCadastrada(@PathVariable("id") Integer organizacaoID, @Validated(OnUpdateValidation.class) @RequestBody OrganizacaoDTO dadosOrganizacao) {
+        System.out.println(dadosOrganizacao);
         organizacaoService.atualizarOrganizacaoCadastrada(organizacaoID, dadosOrganizacao);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);

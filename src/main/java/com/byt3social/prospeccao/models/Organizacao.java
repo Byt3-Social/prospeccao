@@ -1,5 +1,6 @@
 package com.byt3social.prospeccao.models;
 
+import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.enums.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,11 +20,11 @@ import java.util.Date;
 @NoArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Getter
+@Setter
 public class Organizacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(updatable = false)
     private String cnpj;
     private String nome;
     private String email;
@@ -33,6 +35,9 @@ public class Organizacao {
     @JsonProperty("status_cadastro")
     @Enumerated(EnumType.STRING)
     private Status statusCadastro;
+    @Column(name = "indicador_id")
+    @JsonProperty("indicador_id")
+    private Integer indicadorId;
     @CreationTimestamp
     @Column(name = "created_at")
     @JsonProperty("created_at")
@@ -52,8 +57,18 @@ public class Organizacao {
         this.createdAt = Date.from(Instant.now());
     }
 
+    public Organizacao(IndicacaoDTO dados) {
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.telefone = dados.telefone();
+        this.responsavel = new Responsavel(dados.responsavel());
+        this.statusCadastro = Status.INDICADO;
+        this.createdAt = Date.from(Instant.now());
+        this.indicadorId = dados.indicador_id();
+    }
+
     public void atualizar(OrganizacaoDTO dadosOrganizacao) {
-        if(dadosOrganizacao.cnpj() != null) {
+        if(dadosOrganizacao.cnpj() != null && this.statusCadastro == Status.INDICADO) {
             this.cnpj = dadosOrganizacao.cnpj();
         }
 

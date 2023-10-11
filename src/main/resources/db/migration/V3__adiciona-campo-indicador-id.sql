@@ -1,0 +1,1 @@
+ALTER TABLE organizacoes ADD COLUMN indicador_id INT UNSIGNED NULL;
