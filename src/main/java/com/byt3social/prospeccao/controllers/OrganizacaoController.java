@@ -32,6 +32,10 @@ public class OrganizacaoController {
     public ResponseEntity consultaOrganizacao(@PathVariable Integer id) {
         Organizacao organizacao = organizacaoService.consultarOrganizacaoCadastrada(id);
 
+        if (organizacao == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
         return new ResponseEntity(organizacao, HttpStatus.OK);
     }
 
@@ -58,9 +62,10 @@ public class OrganizacaoController {
 
     @PutMapping("/organizacoes/{id}")
     public ResponseEntity atualizarOrganizacaoCadastrada(@PathVariable("id") Integer organizacaoID, @Validated(OnUpdateValidation.class) @RequestBody OrganizacaoDTO dadosOrganizacao) {
-        System.out.println(dadosOrganizacao);
         organizacaoService.atualizarOrganizacaoCadastrada(organizacaoID, dadosOrganizacao);
-
+        if (organizacaoID == null || organizacaoID<0) {
+                return new ResponseEntity(HttpStatus.NOT_FOUND);
+            }
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
