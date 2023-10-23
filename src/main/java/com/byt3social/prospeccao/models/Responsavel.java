@@ -6,11 +6,13 @@ import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Embeddable
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 public class Responsavel {
     @Column(name = "nome_responsavel")
     private String nome;
@@ -26,16 +28,8 @@ public class Responsavel {
     }
 
     public void atualizar(ResponsavelDTO dados) {
-        if(dados.nome() != null) {
-            this.nome = dados.nome();
-        }
-
-        if(dados.email() != null) {
-            this.email = dados.email();
-        }
-
-        if(dados.telefone() != null) {
-            this.telefone = dados.telefone();
-        }
+        this.nome = dados.nome();
+        this.email = dados.email();
+        this.telefone = dados.telefone();
     }
 }

@@ -2,11 +2,13 @@ package com.byt3social.prospeccao.services;
 
 import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
+import com.byt3social.prospeccao.enums.Status;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.repositories.OrganizacaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +21,17 @@ public class OrganizacaoService {
     private RabbitTemplate rabbitTemplate;
 
     @Transactional
-    public void cadastrarOrganizacao(OrganizacaoDTO dadosOrganizacao) {
+    public boolean cadastrarOrganizacao(OrganizacaoDTO dadosOrganizacao) {
+        if(organizacaoRepository.findByCnpj(dadosOrganizacao.cnpj()) != null) {
+            return false;
+        }
+
         Organizacao organizacao = new Organizacao(dadosOrganizacao);
         organizacao = organizacaoRepository.save(organizacao);
 
         rabbitTemplate.convertAndSend("prospeccao.ex","", organizacao);
+
+        return true;
     }
 
     @Transactional
@@ -49,7 +57,7 @@ public class OrganizacaoService {
     }
 
     public List<Organizacao> consultarOrganizacoesCadastradas() {
-        return organizacaoRepository.findAll();
+        return organizacaoRepository.findAllByStatusCadastroNot(Status.INDICADO, Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Organizacao consultarOrganizacaoCadastrada(Integer organizacaoID) {
