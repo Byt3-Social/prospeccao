@@ -22,7 +22,7 @@ class OrganizacaoRepositoryTest {
     
     @Test
     public void testCriarResponsavel() {
-        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "maria@gmail.com", "6799999999");
+        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "12345678911", "maria@gmail.com", "6799999999");
         Responsavel responsavel = new Responsavel(responsavelDTO);
 
         assertEquals("Maria", responsavel.getNome());
@@ -32,10 +32,10 @@ class OrganizacaoRepositoryTest {
 
     @Test
     public void testAtualizarResponsavel() {
-        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "maria@gmail.com", "6799999999");
+        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "12345678911","maria@gmail.com", "6799999999");
         Responsavel responsavel = new Responsavel(responsavelDTO);
 
-        ResponsavelDTO updatedResponsavelDTO = new ResponsavelDTO("João", "joao@gmail.com", "6798888888");
+        ResponsavelDTO updatedResponsavelDTO = new ResponsavelDTO("João", "12345678911","joao@gmail.com", "6798888888");
         responsavel.atualizar(updatedResponsavelDTO);
 
         assertEquals("João", responsavel.getNome());
@@ -45,7 +45,7 @@ class OrganizacaoRepositoryTest {
     
     @Test
     public void testInserirOrganizacao() {
-        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Alberto", "alberto@gmail.com", "67992455588");
+        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Alberto", "12345678911", "alberto@gmail.com", "67992455588");
         OrganizacaoDTO organizacaoDTO = new OrganizacaoDTO(
                 null, 
                 "12345678901234",
@@ -64,7 +64,7 @@ class OrganizacaoRepositoryTest {
     }
     @Test
     public void testAtualizarOrganizacao() {
-        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "maria@gmail.com", "6799999999");
+        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "12345678911", "maria@gmail.com", "6799999999");
         OrganizacaoDTO organizacaoDTO = new OrganizacaoDTO(
                 null, 
                 "98765432109876",
@@ -98,7 +98,7 @@ class OrganizacaoRepositoryTest {
 
     @Test
     public void testAtualizarStatusOrganizacao() {
-        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "maria@gmail.com", "6799999999");
+        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "12345678911", "maria@gmail.com", "6799999999");
         OrganizacaoDTO organizacaoDTO = new OrganizacaoDTO(
                 null, 
                 "98765432109876",
