@@ -120,11 +120,11 @@
 							<configuration>
 								<excludes>
 									<exclude>**/config/*</exclude>
-									<exclude>**/amqp/subscribe/*</exclude>
+									<exclude>**/amqp/*</exclude>
 									<exclude>**/exceptions/*</exclude>
 									<exclude>**/security/*</exclude>
 									<exclude>**/services/*</exclude>
-									<exclude>com/byt3social/**/AuthenticationApplication.class</exclude>
+									<exclude>com/byt3social/**/ProspeccaoApplication.class</exclude>
 								</excludes>
 							</configuration>
 						</execution>
@@ -136,11 +136,11 @@
 							<configuration>
 								<excludes>
 									<exclude>**/config/*</exclude>
-									<exclude>**/amqp/subscribe/*</exclude>
+									<exclude>**/amqp/*</exclude>
 									<exclude>**/exceptions/*</exclude>
 									<exclude>**/security/*</exclude>
 									<exclude>**/services/*</exclude>
-									<exclude>com/byt3social/**/AuthenticationApplication.class</exclude>
+									<exclude>com/byt3social/**/ProspeccaoApplication.class</exclude>
 								</excludes>
 								<rules>
 									<rule>
