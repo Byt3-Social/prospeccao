@@ -1,0 +1,1 @@
+ALTER TABLE organizacoes ADD COLUMN cpf_responsavel VARCHAR(255) NULL;
