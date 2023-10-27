@@ -1,7 +1,6 @@
 package com.byt3social.prospeccao.dto;
 
 import com.byt3social.prospeccao.enums.Status;
-import com.byt3social.prospeccao.validation.OnCreateValidation;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;

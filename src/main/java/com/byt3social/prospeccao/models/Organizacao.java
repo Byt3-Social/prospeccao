@@ -5,10 +5,7 @@ import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.enums.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -18,6 +15,7 @@ import java.util.Date;
 @Entity(name = "Organizacao")
 @Table(name = "organizacoes")
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
 @Getter
 @Setter
@@ -32,19 +30,15 @@ public class Organizacao {
     @Embedded
     private Responsavel responsavel;
     @Column(name = "status_cadastro")
-    @JsonProperty("status_cadastro")
     @Enumerated(EnumType.STRING)
     private Status statusCadastro;
     @Column(name = "indicador_id")
-    @JsonProperty("indicador_id")
     private Integer indicadorId;
     @CreationTimestamp
     @Column(name = "created_at")
-    @JsonProperty("created_at")
     private Date createdAt;
     @UpdateTimestamp
     @Column(name = "updated_at")
-    @JsonProperty("update_at")
     private Date updatedAt;
 
     public Organizacao(OrganizacaoDTO dados) {
@@ -54,7 +48,6 @@ public class Organizacao {
         this.telefone = dados.telefone();
         this.responsavel = new Responsavel(dados.responsavel());
         this.statusCadastro = Status.CADASTRADO;
-        this.createdAt = Date.from(Instant.now());
     }
 
     public Organizacao(IndicacaoDTO dados) {
@@ -63,7 +56,6 @@ public class Organizacao {
         this.telefone = dados.telefone();
         this.responsavel = new Responsavel(dados.responsavel());
         this.statusCadastro = Status.INDICADO;
-        this.createdAt = Date.from(Instant.now());
         this.indicadorId = dados.indicador_id();
     }
 
@@ -72,17 +64,9 @@ public class Organizacao {
             this.cnpj = dadosOrganizacao.cnpj();
         }
 
-        if(dadosOrganizacao.nome() != null) {
-            this.nome = dadosOrganizacao.nome();
-        }
-
-        if(dadosOrganizacao.email() != null) {
-            this.email = dadosOrganizacao.email();
-        }
-
-        if(dadosOrganizacao.telefone() != null) {
-            this.telefone = dadosOrganizacao.telefone();
-        }
+        this.nome = dadosOrganizacao.nome();
+        this.email = dadosOrganizacao.email();
+        this.telefone = dadosOrganizacao.telefone();
 
         if(dadosOrganizacao.responsavel() != null) {
             this.responsavel.atualizar(dadosOrganizacao.responsavel());
