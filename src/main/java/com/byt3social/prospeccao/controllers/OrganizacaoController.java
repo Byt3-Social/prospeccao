@@ -25,7 +25,7 @@ public class OrganizacaoController {
     private OrganizacaoService organizacaoService;
 
     @Operation(summary = "Consultar todas as organizações cadastradas")
-    @ApiResponse(responseCode = "200", description = "Consulta realizada com sucesso!")
+    @ApiResponse(responseCode = "200", description = "Consulta realizada com sucesso!", content = @Content(schema = @Schema(implementation = Organizacao.class)))
     @ApiResponse(responseCode = "401", description = "Consulta mal-sucedida")
     @GetMapping(value = "/organizacoes")
     public ResponseEntity consultarOrganizacoesCadastradas() {
@@ -34,7 +34,7 @@ public class OrganizacaoController {
         return new ResponseEntity(organizacaos, HttpStatus.OK);
     }
 
-    @Operation(summary = "Consultar uma organização específica")
+    @Operation(summary = "Consultar uma organização específica cadastrada")
     @ApiResponse(responseCode = "200", description = "Consulta realizada com sucesso!", content = @Content(schema = @Schema(implementation = Organizacao.class)))
     @ApiResponse(responseCode = "401", description = "Consulta mal-sucedida")
     @GetMapping(value = "/organizacoes/{id}")
@@ -68,7 +68,7 @@ public class OrganizacaoController {
 
     @Operation(summary = "Converter uma indicação")
     @ApiResponse(responseCode = "201", description = "Indicação convertida com sucesso!")
-    @ApiResponse(responseCode = "401", description = "Conversão mal-sucedida")
+    @ApiResponse(responseCode = "404", description = "Organização não encontrada")
     @GetMapping("/indicacoes/{id}")
     public ResponseEntity converterIndicacao(@PathVariable("id") Integer organizacaoID) {
         organizacaoService.converterIndicacao(organizacaoID);
@@ -77,7 +77,7 @@ public class OrganizacaoController {
     }
 
     @Operation(summary = "Atualizar uma organização cadastrada")
-    @ApiResponse(responseCode = "201", description = "Organização atualizada com sucesso!")
+    @ApiResponse(responseCode = "204", description = "Organização atualizada com sucesso!")
     @ApiResponse(responseCode = "404", description = "Organização não encontrada")
     @PutMapping("/organizacoes/{id}")
     public ResponseEntity atualizarOrganizacaoCadastrada(@PathVariable("id") Integer organizacaoID, @Valid @RequestBody OrganizacaoDTO dadosOrganizacao) {
