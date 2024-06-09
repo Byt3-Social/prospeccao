@@ -36,6 +36,10 @@ public class Organizacao {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private Date updatedAt;
+    @OneToOne
+    @JoinColumn(name = "indicador_id")
+    @JsonManagedReference
+    private Indicacao indicacao;
 
     public Organizacao(OrganizacaoDTO dados) {
         this.cnpj = dados.cnpj();
