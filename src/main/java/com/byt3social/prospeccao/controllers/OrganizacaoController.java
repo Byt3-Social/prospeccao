@@ -1,11 +1,12 @@
 package com.byt3social.prospeccao.controllers;
 
+import com.byt3social.prospeccao.dto.CadastroDTO;
 import com.byt3social.prospeccao.dto.IndicacaoDTO;
+import com.byt3social.prospeccao.dto.IndicacaoStatusDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.models.Indicacao;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.services.OrganizacaoService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -90,5 +91,19 @@ public class OrganizacaoController {
         Indicacao indicacao = organizacaoService.buscarIndicacao(indicacaoid);
 
         return new ResponseEntity<>(indicacao, HttpStatus.OK);
+    }
+
+    @PostMapping("/indicacoes/{id}/cadastros")
+    public ResponseEntity salvarFormularioIndicado(@RequestBody CadastroDTO cadastroDTO) {
+        organizacaoService.salvarFormularioIndicacao(cadastroDTO);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/indicacoes/{id}/status")
+    public ResponseEntity alterarStatusIndicacao(@PathVariable("id") Integer indicaoId, @RequestBody IndicacaoStatusDTO indicacaoStatusDTO) {
+        organizacaoService.atualizarStatusIndicacao(indicaoId, indicacaoStatusDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

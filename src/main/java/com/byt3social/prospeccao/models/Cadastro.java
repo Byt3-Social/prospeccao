@@ -1,8 +1,7 @@
 package com.byt3social.prospeccao.models;
 
-import com.byt3social.prospeccao.enums.Status;
+import com.byt3social.prospeccao.dto.CadastroDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -39,4 +38,13 @@ public class Cadastro {
     @OneToOne(mappedBy = "cadastro")
     @JsonBackReference
     private Indicacao indicacao;
+
+    public Cadastro(CadastroDTO cadastroDTO, Indicacao indicacao) {
+        this.cnpj = cadastroDTO.cnpj();
+        this.nomeOrganizacao = cadastroDTO.nomeOrganizacao();
+        this.emailOrganizacao = cadastroDTO.emailOrganizacao();
+        this.telefoneOrganizacao = cadastroDTO.telefoneOrganizacao();
+        this.responsavel = new Responsavel(cadastroDTO.responsavel());
+        this.indicacao = indicacao;
+    }
 }

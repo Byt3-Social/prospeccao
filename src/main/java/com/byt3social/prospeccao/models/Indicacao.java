@@ -69,4 +69,16 @@ public class Indicacao {
         this.colaboradorId = indicacaoDTO.colaboradorId();
         this.categoria = categoria;
     }
+
+    public void atualizarStatus(StatusIndicacao status) {
+        this.status = status;
+    }
+
+    public void atualizarDataConvite() {
+        this.invitedAt = new Date();
+    }
+
+    public void registrarCadastro(Cadastro cadastro) {
+        this.cadastro = cadastro;
+    }
 }
