@@ -1,6 +1,5 @@
 package com.byt3social.prospeccao.services;
 
-import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.enums.Status;
 import com.byt3social.prospeccao.models.Organizacao;
@@ -32,22 +31,6 @@ public class OrganizacaoService {
         rabbitTemplate.convertAndSend("prospeccao.ex","", organizacao);
 
         return true;
-    }
-
-    @Transactional
-    public void indicarOrganizacao(IndicacaoDTO dadosOrganizacao) {
-        Organizacao organizacao = new Organizacao(dadosOrganizacao);
-        organizacaoRepository.save(organizacao);
-    }
-
-    public void converterIndicacao(Integer organizacaoID) {
-        Organizacao organizacao = organizacaoRepository.findById(organizacaoID).get();
-
-        if(organizacao.getCnpj() == null || organizacao.getCnpj().equals("")) {
-            throw new RuntimeException("Informe o cnpj da organização antes de prosseguir");
-        }
-
-        rabbitTemplate.convertAndSend("prospeccao.ex","", organizacao);
     }
 
     @Transactional

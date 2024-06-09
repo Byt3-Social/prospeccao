@@ -1,7 +1,6 @@
 package com.byt3social.prospeccao.repositories;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.models.Responsavel;
-import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.dto.ResponsavelDTO;
 import com.byt3social.prospeccao.enums.Status;
@@ -66,23 +65,6 @@ class OrganizacaoRepositoryTest {
 
         Organizacao organizacaoConsultada = organizacaoRepository.findById(organizacaoSalva.getId()).orElse(null);
         assertNotNull(organizacaoConsultada);
-    }
-
-    @Test
-    void testConstructorFromIndicacaoDTO() {
-        ResponsavelDTO responsavelDTO = new ResponsavelDTO("Maria", "12345678911","maria@gmail.com", "6799999999");
-        IndicacaoDTO indicacaoDTO = new IndicacaoDTO("Nome da Organização", "email@exemplo.com", "1234567890", responsavelDTO, Status.INDICADO, 42);
-        Organizacao organizacao = new Organizacao(indicacaoDTO);
-
-        assertEquals("Nome da Organização", organizacao.getNome());
-        assertEquals("email@exemplo.com", organizacao.getEmail());
-        assertEquals("1234567890", organizacao.getTelefone());
-        assertNotNull(organizacao.getResponsavel());
-        assertEquals("Maria", organizacao.getResponsavel().getNome());
-        assertEquals("maria@gmail.com", organizacao.getResponsavel().getEmail());
-        assertEquals("6799999999", organizacao.getResponsavel().getTelefone());
-        assertEquals(Status.INDICADO, organizacao.getStatusCadastro());
-        assertEquals(42, organizacao.getIndicadorId());
     }
 
     @Test
@@ -167,14 +149,6 @@ class OrganizacaoRepositoryTest {
         assertEquals("maria@gmail.com", responsavel.getEmail());
         assertEquals("12345678911", responsavel.getCpf());
 
-    }
-
-    @Test
-    void testSetIndicadorId() {
-        Organizacao organizacao = new Organizacao(null, "123456789", "Outra Empresa", "123456@mail.com", null, null, null, 1, null, null);
-        organizacao.setIndicadorId(2);
-
-        assertEquals(2, organizacao.getIndicadorId());
     }
 
     @Test

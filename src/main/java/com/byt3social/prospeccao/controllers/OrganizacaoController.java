@@ -1,6 +1,5 @@
 package com.byt3social.prospeccao.controllers;
 
-import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.services.OrganizacaoService;
@@ -54,26 +53,6 @@ public class OrganizacaoController {
         }
 
         return new ResponseEntity(HttpStatus.CREATED);
-    }
-
-    @Operation(summary = "Indicar uma organização")
-    @ApiResponse(responseCode = "201", description = "Organização indicada com sucesso!")
-    @ApiResponse(responseCode = "401", description = "Indicação mal-sucedida")
-    @PostMapping("/indicacoes")
-    public ResponseEntity indicarOrganizacao(@RequestBody IndicacaoDTO dadosOrganizacao) {
-        organizacaoService.indicarOrganizacao(dadosOrganizacao);
-
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-
-    @Operation(summary = "Converter uma indicação")
-    @ApiResponse(responseCode = "201", description = "Indicação convertida com sucesso!")
-    @ApiResponse(responseCode = "404", description = "Organização não encontrada")
-    @GetMapping("/indicacoes/{id}")
-    public ResponseEntity converterIndicacao(@PathVariable("id") Integer organizacaoID) {
-        organizacaoService.converterIndicacao(organizacaoID);
-
-        return new ResponseEntity(HttpStatus.OK);
     }
 
     @Operation(summary = "Atualizar uma organização cadastrada")

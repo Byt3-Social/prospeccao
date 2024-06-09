@@ -1,15 +1,13 @@
 package com.byt3social.prospeccao.models;
 
-import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.enums.Status;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.Instant;
 import java.util.Date;
 
 @Entity(name = "Organizacao")
@@ -32,8 +30,6 @@ public class Organizacao {
     @Column(name = "status_cadastro")
     @Enumerated(EnumType.STRING)
     private Status statusCadastro;
-    @Column(name = "indicador_id")
-    private Integer indicadorId;
     @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
@@ -48,15 +44,6 @@ public class Organizacao {
         this.telefone = dados.telefone();
         this.responsavel = new Responsavel(dados.responsavel());
         this.statusCadastro = Status.CADASTRADO;
-    }
-
-    public Organizacao(IndicacaoDTO dados) {
-        this.nome = dados.nome();
-        this.email = dados.email();
-        this.telefone = dados.telefone();
-        this.responsavel = new Responsavel(dados.responsavel());
-        this.statusCadastro = Status.INDICADO;
-        this.indicadorId = dados.indicador_id();
     }
 
     public void atualizar(OrganizacaoDTO dadosOrganizacao) {
