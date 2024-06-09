@@ -1,5 +1,6 @@
 package com.byt3social.prospeccao.models;
 
+import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.enums.Abrangencia;
 import com.byt3social.prospeccao.enums.StatusIndicacao;
 import com.byt3social.prospeccao.enums.TipoAcao;
@@ -26,7 +27,7 @@ public class Indicacao {
     @Column(name = "nome_organizacao")
     private String nomeOrganizacao;
     @Embedded
-    private Responsavel responsavel;
+    private ResponsavelIndicacao responsavel;
     @Column(name = "tipo_acao")
     @Enumerated(EnumType.STRING)
     private TipoAcao tipoAcao;
@@ -34,7 +35,7 @@ public class Indicacao {
     private Abrangencia abrangencia;
     @Enumerated(EnumType.STRING)
     private StatusIndicacao status;
-    @Column(name = "texto_indicado")
+    @Column(name = "texto_indicacao")
     private String textoIndicacao;
     @Column(name = "colaborador_id")
     private Integer colaboradorId;
@@ -57,4 +58,15 @@ public class Indicacao {
     @OneToOne(mappedBy = "indicacao")
     @JsonBackReference
     private Organizacao organizacao;
+
+    public Indicacao(IndicacaoDTO indicacaoDTO, Categoria categoria) {
+        this.nomeOrganizacao = indicacaoDTO.nomeOrganizacao();
+        this.responsavel = new ResponsavelIndicacao(indicacaoDTO.responsavel());
+        this.tipoAcao = indicacaoDTO.tipoAcao();
+        this.abrangencia = indicacaoDTO.abrangencia();
+        this.status = StatusIndicacao.INDICADO;
+        this.textoIndicacao = indicacaoDTO.textoIndicacao();
+        this.colaboradorId = indicacaoDTO.colaboradorId();
+        this.categoria = categoria;
+    }
 }

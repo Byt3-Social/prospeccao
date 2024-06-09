@@ -1,8 +1,13 @@
 package com.byt3social.prospeccao.services;
 
+import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.enums.Status;
+import com.byt3social.prospeccao.models.Categoria;
+import com.byt3social.prospeccao.models.Indicacao;
 import com.byt3social.prospeccao.models.Organizacao;
+import com.byt3social.prospeccao.repositories.CategoriaRepository;
+import com.byt3social.prospeccao.repositories.IndicacaoRepository;
 import com.byt3social.prospeccao.repositories.OrganizacaoRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -18,6 +23,10 @@ public class OrganizacaoService {
     private OrganizacaoRepository organizacaoRepository;
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private CategoriaRepository categoriaRepository;
+    @Autowired
+    private IndicacaoRepository indicacaoRepository;
 
     @Transactional
     public boolean cadastrarOrganizacao(OrganizacaoDTO dadosOrganizacao) {
@@ -51,5 +60,12 @@ public class OrganizacaoService {
     public void atualizarStatusOrganizacao(OrganizacaoDTO organizacaoDTO) {
         Organizacao organizacao = organizacaoRepository.findById(organizacaoDTO.id()).get();
         organizacao.atualizarStatus(organizacaoDTO);
+    }
+
+    @Transactional
+    public void indicarOrganizacao(IndicacaoDTO indicacaoDTO) {
+        Categoria categoria = categoriaRepository.getReferenceById(indicacaoDTO.categoriaId());
+        Indicacao indicacao = new Indicacao(indicacaoDTO, categoria);
+        indicacaoRepository.save(indicacao);
     }
 }

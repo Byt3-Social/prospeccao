@@ -1,5 +1,6 @@
 package com.byt3social.prospeccao.controllers;
 
+import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.services.OrganizacaoService;
@@ -67,5 +68,12 @@ public class OrganizacaoController {
         }
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PostMapping("/indicacao")
+    public ResponseEntity indicarOrganizacao(@RequestBody IndicacaoDTO indicacaoDTO) {
+        organizacaoService.indicarOrganizacao(indicacaoDTO);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

@@ -1,0 +1,1 @@
+ALTER TABLE indicacoes MODIFY COLUMN cadastro_id INT UNSIGNED NULL;
