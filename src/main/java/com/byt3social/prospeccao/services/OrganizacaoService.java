@@ -68,4 +68,12 @@ public class OrganizacaoService {
         Indicacao indicacao = new Indicacao(indicacaoDTO, categoria);
         indicacaoRepository.save(indicacao);
     }
+
+    public List<Indicacao> buscarIndicacoes() {
+        return indicacaoRepository.findAll();
+    }
+
+    public Indicacao buscarIndicacao(Integer indicacaoid) {
+        return indicacaoRepository.findById(indicacaoid).get();
+    }
 }
