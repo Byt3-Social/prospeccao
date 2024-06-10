@@ -4,6 +4,7 @@ import com.byt3social.prospeccao.dto.CadastroDTO;
 import com.byt3social.prospeccao.dto.IndicacaoDTO;
 import com.byt3social.prospeccao.dto.IndicacaoStatusDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
+import com.byt3social.prospeccao.models.Categoria;
 import com.byt3social.prospeccao.models.Indicacao;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.services.OrganizacaoService;
@@ -70,6 +71,13 @@ public class OrganizacaoController {
         }
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/indicacoes/categorias")
+    public ResponseEntity consultarCategoriasIndicacao() {
+        List<Categoria> categorias = organizacaoService.buscarCategoriasIndicacao();
+
+        return new ResponseEntity<>(categorias, HttpStatus.OK);
     }
 
     @PostMapping("/indicacoes")

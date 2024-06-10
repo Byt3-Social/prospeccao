@@ -1,7 +1,7 @@
 package com.byt3social.prospeccao.enums;
 
 public enum Abrangencia {
-    MUNICIPAL,
+    REGIONAL,
     ESTADUAL,
     NACIONAL,
     INTERNACIONAL

@@ -67,4 +67,8 @@ public class Organizacao {
     public void atualizarStatus(OrganizacaoDTO organizacaoDTO) {
         this.statusCadastro = organizacaoDTO.statusCadastro();
     }
+
+    public void definirIndicacao(Indicacao indicacao) {
+        this.indicacao = indicacao;
+    }
 }

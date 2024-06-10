@@ -1,9 +1,9 @@
 package com.byt3social.prospeccao.enums;
 
 public enum StatusIndicacao {
-    INDICADO,
-    CONVIDADO,
+    INDICADA,
+    CONVIDADA,
     FORM_PREENCHIDO,
-    CONCLUIDO,
-    ARQUIVADO
+    CONCLUIDA,
+    ARQUIVADA
 }

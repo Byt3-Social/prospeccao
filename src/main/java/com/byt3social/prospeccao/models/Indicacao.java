@@ -64,7 +64,7 @@ public class Indicacao {
         this.responsavel = new ResponsavelIndicacao(indicacaoDTO.responsavel());
         this.tipoAcao = indicacaoDTO.tipoAcao();
         this.abrangencia = indicacaoDTO.abrangencia();
-        this.status = StatusIndicacao.INDICADO;
+        this.status = StatusIndicacao.INDICADA;
         this.textoIndicacao = indicacaoDTO.textoIndicacao();
         this.colaboradorId = indicacaoDTO.colaboradorId();
         this.categoria = categoria;

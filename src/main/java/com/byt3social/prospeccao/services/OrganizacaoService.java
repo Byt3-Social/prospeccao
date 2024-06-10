@@ -11,7 +11,6 @@ import com.byt3social.prospeccao.repositories.CadastroRepository;
 import com.byt3social.prospeccao.repositories.CategoriaRepository;
 import com.byt3social.prospeccao.repositories.IndicacaoRepository;
 import com.byt3social.prospeccao.repositories.OrganizacaoRepository;
-import com.thoughtworks.xstream.mapper.Mapper;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,7 +79,7 @@ public class OrganizacaoService {
     }
 
     public List<Indicacao> buscarIndicacoes() {
-        return indicacaoRepository.findAll();
+        return indicacaoRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
     }
 
     public Indicacao buscarIndicacao(Integer indicacaoid) {
@@ -100,11 +99,11 @@ public class OrganizacaoService {
     public void atualizarStatusIndicacao(Integer indicaoId, IndicacaoStatusDTO indicacaoStatusDTO) {
         Indicacao indicacao = indicacaoRepository.findById(indicaoId).get();
 
-        if(indicacaoStatusDTO.status() == StatusIndicacao.CONVIDADO) {
-            String linkIndicacao = urlBaseIndicacao + "/indicacoes/" + indicacao.getId() + "/cadastros";
+        if(indicacaoStatusDTO.status() == StatusIndicacao.CONVIDADA) {
+            String linkIndicacao = urlBaseIndicacao + "/organizacao/indicacoes/" + indicacao.getId() + "/concluir";
             emailService.notificarIndicacao(indicacao, linkIndicacao);
             indicacao.atualizarDataConvite();
-        } else if (indicacaoStatusDTO.status() == StatusIndicacao.CONCLUIDO) {
+        } else if (indicacaoStatusDTO.status() == StatusIndicacao.CONCLUIDA) {
             Cadastro cadastro = indicacao.getCadastro();
 
             OrganizacaoDTO organizacaoDTO = new OrganizacaoDTO(
@@ -125,8 +124,15 @@ public class OrganizacaoService {
             if(!this.cadastrarOrganizacao(organizacaoDTO)) {
                 throw new RuntimeException("Não foi possível converter a indicação!");
             }
+
+            Organizacao organizacao = organizacaoRepository.findByCnpj(organizacaoDTO.cnpj());
+            organizacao.definirIndicacao(indicacao);
         }
 
         indicacao.atualizarStatus(indicacaoStatusDTO.status());
+    }
+
+    public List<Categoria> buscarCategoriasIndicacao() {
+        return categoriaRepository.findAll();
     }
 }
