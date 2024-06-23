@@ -135,4 +135,10 @@ public class OrganizacaoService {
     public List<Categoria> buscarCategoriasIndicacao() {
         return categoriaRepository.findAll();
     }
+
+    public Boolean cadastroPodeSerPreenchido(Integer id) {
+        Indicacao indicacao = indicacaoRepository.findById(id).get();
+
+        return indicacao.getCadastro() == null && indicacao.getStatus() == StatusIndicacao.CONVIDADA;
+    }
 }

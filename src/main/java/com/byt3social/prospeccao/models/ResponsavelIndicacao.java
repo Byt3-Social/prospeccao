@@ -1,6 +1,6 @@
 package com.byt3social.prospeccao.models;
 
-import com.byt3social.prospeccao.dto.ResponsavelDTO;
+import com.byt3social.prospeccao.dto.ResponsavelIndicacaoDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class ResponsavelIndicacao {
     @Column(name = "telefone_responsavel")
     private String telefone;
 
-    public ResponsavelIndicacao(ResponsavelDTO responsavelDTO) {
+    public ResponsavelIndicacao(ResponsavelIndicacaoDTO responsavelDTO) {
         this.nome = responsavelDTO.nome();
         this.email = responsavelDTO.email();
         this.telefone = responsavelDTO.telefone();

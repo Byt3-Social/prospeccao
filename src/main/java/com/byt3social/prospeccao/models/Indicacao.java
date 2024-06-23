@@ -37,8 +37,7 @@ public class Indicacao {
     private StatusIndicacao status;
     @Column(name = "texto_indicacao")
     private String textoIndicacao;
-    @Column(name = "colaborador_id")
-    private Integer colaboradorId;
+    private String colaborador;
     @Column(name = "invited_at")
     private Date invitedAt;
     @CreationTimestamp
@@ -66,7 +65,7 @@ public class Indicacao {
         this.abrangencia = indicacaoDTO.abrangencia();
         this.status = StatusIndicacao.INDICADA;
         this.textoIndicacao = indicacaoDTO.textoIndicacao();
-        this.colaboradorId = indicacaoDTO.colaboradorId();
+        this.colaborador = indicacaoDTO.colaborador();
         this.categoria = categoria;
     }
 

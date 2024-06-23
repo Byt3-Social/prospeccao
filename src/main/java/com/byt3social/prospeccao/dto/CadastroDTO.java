@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record CadastroDTO(
+        @NotNull(message = "Solicitação inválida")
         Integer indicacaoId,
         @NotBlank(message = "Campo obrigatório")
         @Pattern(regexp = "\\d{14}", message = "Campo inválido")
@@ -20,6 +21,7 @@ public record CadastroDTO(
         @Pattern(regexp = "\\d{10,11}", message = "Campo inválido")
         String telefoneOrganizacao,
         @NotNull
+                @Valid
         ResponsavelDTO responsavel
 ) {
 }

@@ -1,17 +1,25 @@
 package com.byt3social.prospeccao.dto;
 
 import com.byt3social.prospeccao.enums.Abrangencia;
-import com.byt3social.prospeccao.enums.StatusIndicacao;
 import com.byt3social.prospeccao.enums.TipoAcao;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public record IndicacaoDTO(
+        @NotBlank(message = "Campo obrigatório")
         String nomeOrganizacao,
-        ResponsavelDTO responsavel,
+        @NotNull
+        @Valid
+        ResponsavelIndicacaoDTO responsavel,
+        @NotNull(message = "Campo obrigatório")
         TipoAcao tipoAcao,
+        @NotNull(message = "Campo obrigatório")
         Abrangencia abrangencia,
+        @NotBlank(message = "Campo obrigatório")
         String textoIndicacao,
-        Integer colaboradorId,
+        String colaborador,
+        @NotNull(message = "Campo obrigatório")
         Integer categoriaId
 ) {
 }

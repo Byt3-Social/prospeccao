@@ -81,7 +81,7 @@ public class OrganizacaoController {
     }
 
     @PostMapping("/indicacoes")
-    public ResponseEntity indicarOrganizacao(@RequestBody IndicacaoDTO indicacaoDTO) {
+    public ResponseEntity indicarOrganizacao(@Valid @RequestBody IndicacaoDTO indicacaoDTO) {
         organizacaoService.indicarOrganizacao(indicacaoDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -101,8 +101,15 @@ public class OrganizacaoController {
         return new ResponseEntity<>(indicacao, HttpStatus.OK);
     }
 
+    @PostMapping("/indicacoes/{id}/cadastros/verificacoes")
+    public ResponseEntity verificarFormularioCadastro(@PathVariable Integer id) {
+        Boolean existe = organizacaoService.cadastroPodeSerPreenchido(id);
+
+        return new ResponseEntity<>(existe, HttpStatus.OK);
+    }
+
     @PostMapping("/indicacoes/{id}/cadastros")
-    public ResponseEntity salvarFormularioIndicado(@RequestBody CadastroDTO cadastroDTO) {
+    public ResponseEntity salvarFormularioIndicado(@Valid @RequestBody CadastroDTO cadastroDTO) {
         organizacaoService.salvarFormularioIndicacao(cadastroDTO);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
