@@ -1,10 +1,13 @@
 package com.byt3social.prospeccao.controllers;
 
+import com.byt3social.prospeccao.dto.CadastroDTO;
 import com.byt3social.prospeccao.dto.IndicacaoDTO;
+import com.byt3social.prospeccao.dto.IndicacaoStatusDTO;
 import com.byt3social.prospeccao.dto.OrganizacaoDTO;
+import com.byt3social.prospeccao.models.Categoria;
+import com.byt3social.prospeccao.models.Indicacao;
 import com.byt3social.prospeccao.models.Organizacao;
 import com.byt3social.prospeccao.services.OrganizacaoService;
-
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -56,26 +59,6 @@ public class OrganizacaoController {
         return new ResponseEntity(HttpStatus.CREATED);
     }
 
-    @Operation(summary = "Indicar uma organização")
-    @ApiResponse(responseCode = "201", description = "Organização indicada com sucesso!")
-    @ApiResponse(responseCode = "401", description = "Indicação mal-sucedida")
-    @PostMapping("/indicacoes")
-    public ResponseEntity indicarOrganizacao(@RequestBody IndicacaoDTO dadosOrganizacao) {
-        organizacaoService.indicarOrganizacao(dadosOrganizacao);
-
-        return new ResponseEntity(HttpStatus.CREATED);
-    }
-
-    @Operation(summary = "Converter uma indicação")
-    @ApiResponse(responseCode = "201", description = "Indicação convertida com sucesso!")
-    @ApiResponse(responseCode = "404", description = "Organização não encontrada")
-    @GetMapping("/indicacoes/{id}")
-    public ResponseEntity converterIndicacao(@PathVariable("id") Integer organizacaoID) {
-        organizacaoService.converterIndicacao(organizacaoID);
-
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
     @Operation(summary = "Atualizar uma organização cadastrada")
     @ApiResponse(responseCode = "204", description = "Organização atualizada com sucesso!")
     @ApiResponse(responseCode = "404", description = "Organização não encontrada")
@@ -88,5 +71,54 @@ public class OrganizacaoController {
         }
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/indicacoes/categorias")
+    public ResponseEntity consultarCategoriasIndicacao() {
+        List<Categoria> categorias = organizacaoService.buscarCategoriasIndicacao();
+
+        return new ResponseEntity<>(categorias, HttpStatus.OK);
+    }
+
+    @PostMapping("/indicacoes")
+    public ResponseEntity indicarOrganizacao(@Valid @RequestBody IndicacaoDTO indicacaoDTO) {
+        organizacaoService.indicarOrganizacao(indicacaoDTO);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @GetMapping("/indicacoes")
+    public ResponseEntity consultarIndicacoes() {
+        List<Indicacao> indicacaos = organizacaoService.buscarIndicacoes();
+
+        return new ResponseEntity<>(indicacaos, HttpStatus.OK);
+    }
+
+    @GetMapping("/indicacoes/{id}")
+    public ResponseEntity consultarIndicacoes(@PathVariable("id") Integer indicacaoid) {
+        Indicacao indicacao = organizacaoService.buscarIndicacao(indicacaoid);
+
+        return new ResponseEntity<>(indicacao, HttpStatus.OK);
+    }
+
+    @PostMapping("/indicacoes/{id}/cadastros/verificacoes")
+    public ResponseEntity verificarFormularioCadastro(@PathVariable Integer id) {
+        Boolean existe = organizacaoService.cadastroPodeSerPreenchido(id);
+
+        return new ResponseEntity<>(existe, HttpStatus.OK);
+    }
+
+    @PostMapping("/indicacoes/{id}/cadastros")
+    public ResponseEntity salvarFormularioIndicado(@Valid @RequestBody CadastroDTO cadastroDTO) {
+        organizacaoService.salvarFormularioIndicacao(cadastroDTO);
+
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/indicacoes/{id}/status")
+    public ResponseEntity alterarStatusIndicacao(@PathVariable("id") Integer indicaoId, @RequestBody IndicacaoStatusDTO indicacaoStatusDTO) {
+        organizacaoService.atualizarStatusIndicacao(indicaoId, indicacaoStatusDTO);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }

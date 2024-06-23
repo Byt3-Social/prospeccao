@@ -1,0 +1,1 @@
+ALTER TABLE organizacoes ADD FOREIGN KEY(indicador_id) REFERENCES indicacoes(id)
